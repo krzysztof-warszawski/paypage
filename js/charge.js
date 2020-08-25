@@ -37,6 +37,9 @@ card.on('change', function(event) {
     }
 });
 
+// Style button
+document.querySelector('#payment-form button').classList = 'btn btn-primary btn-block mt-4';
+
 // Handle form submission.
 var form = document.getElementById('payment-form');
 form.addEventListener('submit', function(event) {
