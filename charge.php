@@ -6,6 +6,8 @@ use Stripe\Stripe;
 require 'config/config.php';
 require 'lib/pdo_db.php';
 require_once('vendor/autoload.php');
+require_once('models/Customer.php');
+//require 'models/Customer.php';
 
 
     Stripe::setApiKey(SK_TEST_API);
@@ -29,9 +31,19 @@ require_once('vendor/autoload.php');
         "customer" => $customer->id
     ));
 
+    $customerData = [
+        'id' => $charge['customer'],
+        'first_name' => $first_name,
+        'last_name' => $last_name,
+        'email' => $email
+    ];
+
+    $customer = new \Customer();
+    $customer->addCustomer($customerData);
+
+
     header('Location: success.php?tid=' . $charge->id .
         '&product=' . $charge->description);
-
 
 //    $intent = PaymentIntent::create([
 //        'amount' => 1099,
