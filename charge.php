@@ -7,6 +7,7 @@ require 'config/config.php';
 require 'lib/pdo_db.php';
 require_once('vendor/autoload.php');
 require_once('models/Customer.php');
+require_once('models/Transaction.php');
 //require 'models/Customer.php';
 
 
@@ -31,8 +32,9 @@ require_once('models/Customer.php');
         "customer" => $customer->id
     ));
 
+    // Customer
     $customerData = [
-        'id' => $charge['customer'],
+        'id' => $charge->customer,
         'first_name' => $first_name,
         'last_name' => $last_name,
         'email' => $email
@@ -40,6 +42,19 @@ require_once('models/Customer.php');
 
     $customer = new \Customer();
     $customer->addCustomer($customerData);
+
+    // Transaction
+    $transactionData = [
+        'id' => $charge->id,
+        'customer_id' => $charge->customer,
+        'product' => $charge->description,
+        'amount' => $charge->amount,
+        'currency' => $charge->currency,
+        'status' => $charge->status
+    ];
+
+    $transaction = new \Transaction();
+    $transaction->addTransaction($transactionData);
 
 
     header('Location: success.php?tid=' . $charge->id .
