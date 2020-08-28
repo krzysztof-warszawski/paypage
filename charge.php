@@ -4,6 +4,7 @@ use Stripe\Charge;
 use Stripe\Customer;
 use Stripe\Stripe;
 require 'config/config.php';
+require 'lib/pdo_db.php';
 require_once('vendor/autoload.php');
 
 
